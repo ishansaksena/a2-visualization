@@ -66,7 +66,6 @@ $(function() {
             selectedData = data.filter(function(d) {
                 return selectedStates.indexOf(d.State) > -1
             });
-            console.log(selectedData);
         }
         /* ********************************** Create scales  ********************************** */
         var setScales = function() {
@@ -148,16 +147,17 @@ $(function() {
             circles.enter()
                 .append('circle')
                 .attr('r', function(d) {return rScale(d.Persons);})
-                .attr('fill', function(d) {console.log(d.State +''+ stateScale(d.State)); return stateScale(d.State)})
+                .attr('fill', function(d) {return stateScale(d.State)})
                 .attr('cy', height)
+                .attr('stroke', 'black')
                 .style('opacity', .3)
                 .attr('cx', function(d) { return xScale(d[xVariable]);})
                 .attr('title', function(d) {return d['District']})
                 .on('mouseover', tip.show)
-                .on('mouse', tip.hide)
+                .on('mouseout', tip.hide)
             // Updated values
                 .merge(circles)
-                .attr('fill', function(d) {console.log(d.State +''+ stateScale(d.State)); return stateScale(d.State)})
+                .attr('fill', function(d) {return stateScale(d.State)})
                 .transition()
                 .duration(600)
                 .delay(function(d){return xScale(d[xVariable]) * 5})
@@ -239,8 +239,6 @@ $(function() {
         // Listen for input on the stateVariable Control
         $('#stateControl').on('change', function() {
             selectedStates.push($("#stateControl option:selected").val());
-            //console.log(selectedStates);
-            console.log("Selected a state" + $("#stateControl option:selected").val());
             // Redraw visualization
             draw(selectedData);
         });
@@ -255,9 +253,8 @@ $(function() {
                 selectedStates.push($(this).text());
             });
 
-            // Filter and draw data
+            // Filter and draw data for the selected states
             filterData();
-            //console.log(data);
             d3.selectAll('.axis').remove();
             d3.selectAll('.title').remove();
             draw(selectedData);

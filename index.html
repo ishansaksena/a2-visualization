@@ -12,7 +12,7 @@
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-        
+
         <!-- D3 and tooltip imports-->
         <script src="https://code.jquery.com/jquery.min.js"></script>
         <script src="http://d3js.org/d3.v4.js"></script>
@@ -36,35 +36,48 @@
 
         <section id="question-one">
             <div class="container">
-                <h2>Q.  How has the relationship between permanent residence, asylum and aliens changed overtime?</h2>
+                <h2> Exploring trends between census features for different states</h2>
                 <h3>Design considerations: </h3>
                 <p class='considerations'>
-                    There are 3 types of data explored in this dataset. 
+                    I wanted to explore trends between each pair of progress metrics. A scatterplot was perfect to identify trends over ranges because it allows for perception of direction. In this visualization, the user can pick the variable they want to represent on the X-axis, Y-axis and the states they want to view the data for. Each  circle represents one district. Circles are color coded by state. The area of each circle reflects the population of the district. This was done to allow the user to explore two other trends at the same time while understanding how populations were distributed instead of just how districts are distributed. 
+                </p>
+                
+                <p class="considerations">
+                    The X-axis and Y-axis variables have the same controls i.e. a feature of the data. This is to give the user complete control of features to visualize. They can only select one feature at a time for each axis. Choosing from a list was the simplest way to present such a large collection of features. 
+                </p>
+                
+                <p class="considerations">
+                    Some columns were removed from the options because a lot of data points were missing or were NA. Other columns were removed because they were not numeric and could not be well represented with a scatterplot i.e. in the same form as the other columns. 
+                </p>
+                
+                <p class="considerations">
+                     In the state selection, however, they can select multiple states at the same time. This allows them to compare values and explore trends for the same metrics across different states while allowing them to identify outlying districts. For some states with long names, abbreviations were used. Most users from India, however, would be well versed with the abbreviations and would prefer the colloquial term.
+                </p>
+                
+                <p class="considerations">
+                    
                 </p>
 
 
                 <!-- Controls -->
-                <div class="settings" id='xVariableDiv'>
-                    <div class="col-xs-6">
-                        <h4>Select X-Axis variable</h4>
+                <div class="settings" id='axisSettings'>
+                    <div class="control">
+                        <h4>X-Axis variable</h4>
                         <select name="xVariableSelect" id="xControl" class="form-control" size="8">
                         </select>
                     </div>
-                </div>
-                
-                <div class="settings row text-center" id='yVariableDiv'>
-                    <div class="col-xs-6">
-                        <h4>Select Y-Axis variable</h4>
+                    <div class="control">
+                        <h4>Y-Axis variable</h4>
                         <select name="yVariableSelect" id="yControl" class="form-control" size="8">
                         </select>
                     </div>
                 </div>
-                
+
                 <!-- Visualization -->
                 <div id="vis"></div>
-                
-                <div class="settings" id='xVariableDiv'>
-                    <div class="col-xs-6">
+
+                <div class="settings" id='stateSettings'>
+                    <div class="control">
                         <h4>Select States</h4>
                         <p>Hold <kbd>ctrl</kbd> or <kbd>cmd</kbd> to select multiple countries.</p>
                         <select name="stateSelect" id="stateControl" class="form-control" size="8" multiple>
@@ -72,6 +85,10 @@
                     </div>
                 </div>
             </div>
+            
+            <p class="considerations">
+                Data sourced from: https://www.kaggle.com/bazuka/census2001     
+            </p>
         </section>
         <footer>
             <div class="container">
