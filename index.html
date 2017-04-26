@@ -12,8 +12,12 @@
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        
+        <!-- D3 and tooltip imports-->
         <script src="https://code.jquery.com/jquery.min.js"></script>
         <script src="http://d3js.org/d3.v4.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
+        <link rel="stylesheet" href="//rawgithub.com/Caged/d3-tip/master/examples/example-styles.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
 
         <!-- Custom files -->
@@ -26,7 +30,7 @@
     <body>
         <section id="introduction">
             <div class="container">            
-                <h1>Visualizing 2001 India Census Data</h1>
+                <h1>Visualizing 2001 India Census Data Across Progress Metrics</h1>
             </div>
         </section>
 
@@ -40,21 +44,33 @@
 
 
                 <!-- Controls -->
-
-                <div class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-primary">
-                        <input value="gdp" type="radio" name="radio" id="option1" autocomplete="off">GDP Per Capita
-                    </label>
-                    <label class="btn btn-primary">
-                        <input value="life_expectancy" type="radio" name="options" id="option2" autocomplete="off" >Life Expectancy
-                    </label>
-                    <label class="btn btn-primary active">
-                        <input value="fertility_rate" type="radio" name="options" id="option2" autocomplete="off" checked>Fertility Rate
-                    </label>
+                <div class="settings" id='xVariableDiv'>
+                    <div class="col-xs-6">
+                        <h4>Select X-Axis variable</h4>
+                        <select name="xVariableSelect" id="xControl" class="form-control" size="8">
+                        </select>
+                    </div>
                 </div>
-
+                
+                <div class="settings row text-center" id='yVariableDiv'>
+                    <div class="col-xs-6">
+                        <h4>Select Y-Axis variable</h4>
+                        <select name="yVariableSelect" id="yControl" class="form-control" size="8">
+                        </select>
+                    </div>
+                </div>
+                
                 <!-- Visualization -->
                 <div id="vis"></div>
+                
+                <div class="settings" id='xVariableDiv'>
+                    <div class="col-xs-6">
+                        <h4>Select States</h4>
+                        <p>Hold <kbd>ctrl</kbd> or <kbd>cmd</kbd> to select multiple countries.</p>
+                        <select name="stateSelect" id="stateControl" class="form-control" size="8" multiple>
+                        </select>
+                    </div>
+                </div>
             </div>
         </section>
         <footer>

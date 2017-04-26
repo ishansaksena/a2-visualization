@@ -100,3 +100,12 @@ footer p {
     color: white;
     padding: 2px;
 }
+
+.settings {
+    display: inline-block;
+    margin: 60px;
+}
+.form-control {
+    min-width: 400px;
+    margin: 0 auto;
+}
