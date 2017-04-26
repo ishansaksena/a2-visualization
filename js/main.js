@@ -20,7 +20,7 @@ $(function() {
         var svg = d3.select('#vis')
         .append("svg")
         .attr('height', 600)
-        .attr('width', 1600)
+        .attr('width', 800)
         .style("left", margin.left + "px")
         .style("top", margin.top + "px");
 
@@ -30,6 +30,7 @@ $(function() {
         .attr('width', width);
 
         // Global Variables
+        // Scales
         var xScale = d3.scaleLinear();
         var yScale = d3.scaleLinear();
         var rScale = d3.scaleLinear();
@@ -60,20 +61,23 @@ $(function() {
                 states.push(d.State);
             }
         });
+        selectedStates = states;
 
         // function for filtering data based on selected states
         function filterData() {
+            // Select data for the states that are selected and data that isn't blank or NA
             selectedData = data.filter(function(d) {
-                return selectedStates.indexOf(d.State) > -1
+                return selectedStates.indexOf(d.State) > -1 && !(isNaN((d[xVariable]))) && !(isNaN((d[yVariable])));
             });
         }
         /* ********************************** Create scales  ********************************** */
         var setScales = function() {
-            // Find minimum and maximum values, then define x (log) and y (linear) scales
-            var xMax =d3.max(selectedData, function(d) {return +d[xVariable]})*1.05;
-            var xMin =d3.min(selectedData, function(d) {return +d[xVariable]})*.85;
+            
+            // Find minimum and maximum values, then define linear scales for x, y and radius
+            var xMax = d3.max(selectedData, function(d) { return +d[xVariable]})*1.05;
+            var xMin = d3.min(selectedData, function(d) {return +d[xVariable]})*.85;
             xScale.range([0, width]).domain([xMin, xMax]);
-
+            
             var yMin =d3.min(selectedData, function(d) {return +d[yVariable]})*.9;
             var yMax =d3.max(selectedData, function(d) {return +d[yVariable]})*1.05;
             yScale.range([height, 0]).domain([yMin, yMax]);
@@ -87,11 +91,12 @@ $(function() {
 
         /* ********************************** Create Axes  ********************************** */
         var setAxes = function() {
-            // Define x axis using d3.svg.axis(), assigning the scale as the xScale
+            d3.selectAll('.axis').remove();
+            d3.selectAll('.title').remove();
+            
             xAxis.scale(xScale)
                 .ticks(5, 's');
 
-            // Define y axis using d3.svg.axis(), assigning the scale as the yScale
             yAxis.scale(yScale)
                 .tickFormat(d3.format('.2s'));
 
@@ -126,12 +131,13 @@ $(function() {
         };
 
         /* ********************************** Bind data and Draw visualization  ********************************** */
+        // Set up tooltip to show State on hover
         var tooltip = d3.select("circle")
         .append("div")
         .style("position", "absolute")
         .style("z-index", "10")
         .style("visibility", "hidden")
-        .text("a simple tooltip");
+        .text("");
         
         var tip = d3.tip().attr('class', 'd3-tip').html(function(d) {return d.State;});
         g.call(tip);
@@ -163,7 +169,7 @@ $(function() {
                 .delay(function(d){return xScale(d[xVariable]) * 5})
                 .attr('cx', function(d) { return xScale(d[xVariable]);})
                 .attr('cy', function(d) { return yScale(d[yVariable])});
-
+            // Removing values
             circles.exit()
                 .transition()
                 .duration(1500)
@@ -186,10 +192,10 @@ $(function() {
             var newOption = new Option(d, d);
             xSelector.append(newOption);
         });
-        // Set default selector countries in menu
+        // Set X-axis variable
         xSelector.val(xSelector);
 
-
+        
         // Y - Variable
         // Create a variable selector    
         var ySelector = $('#yControl');
@@ -199,7 +205,7 @@ $(function() {
             var newOption = new Option(d, d);
             ySelector.append(newOption);
         });
-        // Set default selector countries in menu
+        // Set Y-axis variable
         ySelector.val(ySelector);
 
 
@@ -212,7 +218,7 @@ $(function() {
             stateSelector.append(newOption);
         });
 
-        // Set default selector countries in menu
+        // Set State
         stateSelector.val(stateSelector);
 
         /* ********************************** Listen for input  ********************************** */
@@ -220,9 +226,8 @@ $(function() {
         $("#xControl").on('change', function() {
             // Get the selected value
             xVariable = $("#xControl option:selected").val();
-            d3.selectAll('.axis').remove();
-            d3.selectAll('.title').remove();
             // Redraw visualization
+            filterData();
             draw(selectedData);
         });
 
@@ -230,20 +235,12 @@ $(function() {
         $("#yControl").on('change', function() {
             // Get the selected value
             yVariable = $("#yControl option:selected").val();
-            d3.selectAll('.axis').remove();
-            d3.selectAll('.title').remove();
             // Redraw visualization
+            filterData();
             draw(selectedData);
         });
 
-        // Listen for input on the stateVariable Control
-        $('#stateControl').on('change', function() {
-            selectedStates.push($("#stateControl option:selected").val());
-            // Redraw visualization
-            draw(selectedData);
-        });
-
-        // event listener for country selector change
+        // event listener for state selector change
         stateSelector.change(function() {
             // Reset selected countries
             selectedStates = [];
@@ -255,8 +252,6 @@ $(function() {
 
             // Filter and draw data for the selected states
             filterData();
-            d3.selectAll('.axis').remove();
-            d3.selectAll('.title').remove();
             draw(selectedData);
         });
     });
