@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>tp-3-hierarchy</title>
+
+        <!-- Libraries -->
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery.min.js"></script>
+        <script src="http://d3js.org/d3.v4.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.7.1/d3-tip.js"></script>
+
+        <!-- Custom files -->
+        <link rel="stylesheet" href="css/main.css" />
+
+        <!-- your script file -->
+        <script src="js/main.js"></script>
+    </head>
+
+    <body>
+        <section id="introduction">
+            <div class="container">            
+                <h1>Visualizing 2001 India Census Data</h1>
+            </div>
+        </section>
+
+        <section id="question-one">
+            <div class="container">
+                <h2>Q.  How has the relationship between permanent residence, asylum and aliens changed overtime?</h2>
+                <h3>Design considerations: </h3>
+                <p class='considerations'>
+                    There are 3 types of data explored in this dataset. 
+                </p>
+
+
+                <!-- Controls -->
+
+                <div class="btn-group" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                        <input value="gdp" type="radio" name="radio" id="option1" autocomplete="off">GDP Per Capita
+                    </label>
+                    <label class="btn btn-primary">
+                        <input value="life_expectancy" type="radio" name="options" id="option2" autocomplete="off" >Life Expectancy
+                    </label>
+                    <label class="btn btn-primary active">
+                        <input value="fertility_rate" type="radio" name="options" id="option2" autocomplete="off" checked>Fertility Rate
+                    </label>
+                </div>
+
+                <!-- Visualization -->
+                <div id="vis"></div>
+            </div>
+        </section>
+        <footer>
+            <div class="container">
+                <p>
+                    Made by Ishan Saksena, with D3.js
+                </p>
+            </div>
+        </footer>
+
+    </body>
+
+</html>
